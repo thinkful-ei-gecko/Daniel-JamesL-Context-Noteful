@@ -30,7 +30,7 @@ class App extends Component {
                         exact
                         key={path}
                         path={path}
-                        
+                        component = {NoteListNav}
                         // render={routeProps => (
                         //     <NoteListNav
                         //         folders={folders}
@@ -64,20 +64,8 @@ class App extends Component {
                         exact
                         key={path}
                         path={path}
-                        render={routeProps => {
-                            const {folderId} = routeProps.match.params;
-                            const notesForFolder = getNotesForFolder(
-                                notes,
-                                folderId
-                            );
-                            return (
-                                <NoteListMain
-                                    {...routeProps}
-                                    notes={notesForFolder}
+                        component = {NoteListMain}
                                 />
-                            );
-                        }}
-                    />
                 ))}
                 <Route
                     path="/note/:noteId"
@@ -92,12 +80,11 @@ class App extends Component {
     }
 
     render() {
-        const value = {
-            notes: this.state.notes,
-            folders: this.state.folders
-        }
         return (
-            <Context.Provider value={value}>
+            <Context.Provider value ={{
+                notes: this.state.notes,
+                folders: this.state.folders
+              }}>
                 <div className="App">
                     <nav className="App__nav">{this.renderNavRoutes()}</nav>
                     <header className="App__header">
